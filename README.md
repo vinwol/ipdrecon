@@ -8,7 +8,7 @@ Install this package by: remotes::install_git("https://github.com/vinwol/ipdreco
 
 # Package Website
 
-URL: https://pages.github.com/vinwol/ipdrecon/index.html
+URL: https://vinwol.github.io/ipdrecon/
 
 # Reference of Package Functions
 
