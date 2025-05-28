@@ -1,0 +1,44 @@
+---
+title: "Howto"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Howto}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Basic Usage
+The following shows an example how to use the method by Guyot et al for reconstructing
+IPD data from digitalized survival curves.
+```{r message = FALSE, eval = FALSE}
+library(ipdrecon)
+digitized_data <- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE)
+time <- digitized_data[,1]
+prob <- digitized_data[,2]
+trisk <- seq(from=0, to=550, by=50)
+nrisk <- c(137,84,55,34,25,18,13,11,6,5,4,4)
+tot_events <- 126
+lower <- ipdrecon::get_lower_indices(time, trisk) 
+upper <- ipdrecon::get_upper_indices(time, trisk) 
+res <- ipdrecon::get_ipd_guyot(time, prob, trisk, nrisk, lower, upper, tot_events)
+ipd <- res[[1]]
+```
+The following shows an example how to use the method by Rogula et al for reconstructing
+IPD data from digitalized survival curves.
+```{r message = FALSE, eval = FALSE}
+library(ipdrecon)
+digitized_data <- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE)
+time <- digitized_data[,1]
+prob <- digitized_data[,2]
+n <- 137
+cens.t <- NA 
+ipd <- ipdrecon::get_ipd_rogula(n, time, prob, cens.t)
+```
+

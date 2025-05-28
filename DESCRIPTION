@@ -1,0 +1,24 @@
+Package: ipdrecon
+Type: Package
+Title: Reconstruction of IPD from published KM Survival Curves
+Version: 0.1
+Authors@R: 
+    person("Vincent", 
+          "Wolowski", , 
+          "vincent.wolowski@roche.com", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Provides methods to reconstruct IPD from published KM Survival Curves.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: 
+  dplyr,
+  survival
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
