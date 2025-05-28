@@ -1,0 +1,26 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/Howto.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/check_probabilities_for_range.html</loc></url>
+<url><loc>/reference/check_risk_information.html</loc></url>
+<url><loc>/reference/check_valid_numbers.html</loc></url>
+<url><loc>/reference/find_non_decreasing_probabilities.html</loc></url>
+<url><loc>/reference/find_non_increasing_survival_times.html</loc></url>
+<url><loc>/reference/fix_non_decreasing_survival_probabilities.html</loc></url>
+<url><loc>/reference/fix_non_increasing_survival_times.html</loc></url>
+<url><loc>/reference/get_ipd_guyot.html</loc></url>
+<url><loc>/reference/get_ipd_rogula.html</loc></url>
+<url><loc>/reference/get_lower_indices.html</loc></url>
+<url><loc>/reference/get_upper_indices.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/pixel_to_data_point.html</loc></url>
+<url><loc>/reference/prepare_time_interval_data.html</loc></url>
+<url><loc>/reference/validation_input_guyot.html</loc></url>
+<url><loc>/reference/validation_input_rogula.html</loc></url>
+</urlset>
+

@@ -1,0 +1,6 @@
+pandoc: '3.4'
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  Howto: Howto.html
+last_built: 2025-05-28T18:50Z
