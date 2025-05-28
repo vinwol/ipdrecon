@@ -76,17 +76,17 @@
 <div class="section level1">
 <h1 id="package-installation">Package Installation<a class="anchor" aria-label="anchor" href="#package-installation"></a>
 </h1>
-<p>Install this package by: remotes::install_git(“<a href="https://github.roche.com/wolowskv/ipdrecon" class="external-link uri">https://github.roche.com/wolowskv/ipdrecon</a>”)</p>
+<p>Install this package by: remotes::install_git(“<a href="https://github.com/vinwol/ipdrecon" class="external-link uri">https://github.com/vinwol/ipdrecon</a>”)</p>
 </div>
 <div class="section level1">
 <h1 id="package-website">Package Website<a class="anchor" aria-label="anchor" href="#package-website"></a>
 </h1>
-<p>URL: <a href="https://pages.github.roche.com/wolowskv/ipdrecon/index.html" class="external-link uri">https://pages.github.roche.com/wolowskv/ipdrecon/index.html</a></p>
+<p>URL: <a href="https://pages.github.com/vinwol/ipdrecon/index.html" class="external-link uri">https://pages.github.com/vinwol/ipdrecon/index.html</a></p>
 </div>
 <div class="section level1">
 <h1 id="reference-of-package-functions">Reference of Package Functions<a class="anchor" aria-label="anchor" href="#reference-of-package-functions"></a>
 </h1>
-<p>URL: <a href="https://pages.github.roche.com/wolowskv/ipdrecon/reference/index.html" class="external-link uri">https://pages.github.roche.com/wolowskv/ipdrecon/reference/index.html</a></p>
+<p>URL: <a href="https://pages.github.com/vinwol/ipdrecon/reference/index.html" class="external-link uri">https://pages.github.com/vinwol/ipdrecon/reference/index.html</a></p>
 </div>
 <div class="section level1">
 <h1 id="digitalization-tool">Digitalization Tool<a class="anchor" aria-label="anchor" href="#digitalization-tool"></a>
@@ -94,30 +94,55 @@
 <p>WebPlotDigitizer: <a href="https://apps.automeris.io/wpd/" class="external-link uri">https://apps.automeris.io/wpd/</a>  User Manual: <a href="https://automeris.io/WebPlotDigitizer/userManual.pdf" class="external-link uri">https://automeris.io/WebPlotDigitizer/userManual.pdf</a>  Tutorial: <a href="https://automeris.io/WebPlotDigitizer/tutorial.html" class="external-link uri">https://automeris.io/WebPlotDigitizer/tutorial.html</a></p>
 </div>
 <div class="section level1">
-<h1 id="slides">Slides<a class="anchor" aria-label="anchor" href="#slides"></a>
-</h1>
-<p>Extracting Data from Publications to inform Clinical Trials, Part 1: Focus on Methods, <a href="https://docs.google.com/presentation/d/1_5nhxDv0FqUyl7InHGFGGu2DDztPMiW3v06HavJVWyQ/edit#slide=id.p" class="external-link">Link</a>  Extracting Data from Publications to inform Clinical Trials, Part 2: Application to GBM, <a href="https://docs.google.com/presentation/d/1Z6wOwvOZZYJV5vN4QrWO8IwA8Y8jLfYN2u-YCmjfa0c/edit#slide=id.p" class="external-link">Link</a></p>
-</div>
-<div class="section level1">
-<h1 id="python-script-for-automatic-detection-of-survival-curves">Python Script for Automatic Detection of Survival Curves<a class="anchor" aria-label="anchor" href="#python-script-for-automatic-detection-of-survival-curves"></a>
-</h1>
-<p>Python script based on OpenCV for curve detection, <a href="https://github.roche.com/wolowskv/curve_detection" class="external-link">Link</a></p>
-</div>
-<div class="section level1">
 <h1 id="basic-usage">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h1>
 <p>The following shows an example how to use the method by Guyot et al for reconstructing IPD data from digitalized survival curves.</p>
-<p><code>{r message = FALSE, eval = FALSE} library(ipdrecon) digitized_data &lt;- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE) time &lt;- digitized_data[,1] prob &lt;- digitized_data[,2] trisk &lt;- seq(from=0, to=550, by=50) nrisk &lt;- c(137,84,55,34,25,18,13,11,6,5,4,4) tot_events &lt;- 126 lower &lt;- ipdrecon::get_lower_indices(time, trisk)  upper &lt;- ipdrecon::get_upper_indices(time, trisk)  res &lt;- ipdrecon::get_ipd_guyot(time, prob, trisk, nrisk, lower, upper, tot_events) ipd &lt;- res[[1]]</code></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ipdrecon</span><span class="op">)</span></span>
+<span><span class="va">digitized_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">'./data/survival_lung_veteran_digitized.csv'</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span></span>
+<span><span class="va">trisk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from<span class="op">=</span><span class="fl">0</span>, to<span class="op">=</span><span class="fl">550</span>, by<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span>
+<span><span class="va">nrisk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">137</span>,<span class="fl">84</span>,<span class="fl">55</span>,<span class="fl">34</span>,<span class="fl">25</span>,<span class="fl">18</span>,<span class="fl">13</span>,<span class="fl">11</span>,<span class="fl">6</span>,<span class="fl">5</span>,<span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">tot_events</span> <span class="op">&lt;-</span> <span class="fl">126</span></span>
+<span><span class="va">lower</span> <span class="op">&lt;-</span> <span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/get_lower_indices.html">get_lower_indices</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">trisk</span><span class="op">)</span> </span>
+<span><span class="va">upper</span> <span class="op">&lt;-</span> <span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/get_upper_indices.html">get_upper_indices</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">trisk</span><span class="op">)</span> </span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/get_ipd_guyot.html">get_ipd_guyot</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">prob</span>, <span class="va">trisk</span>, <span class="va">nrisk</span>, <span class="va">lower</span>, <span class="va">upper</span>, <span class="va">tot_events</span><span class="op">)</span></span>
+<span><span class="va">ipd</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p>The following shows an example how to use the method by Rogula et al for reconstructing IPD data from digitalized survival curves.</p>
-<p><code>{r message = FALSE, eval = FALSE} library(ipdrecon) digitized_data &lt;- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE) time &lt;- digitized_data[,1] prob &lt;- digitized_data[,2] n &lt;- 137 cens.t &lt;- NA  ipd &lt;- ipdrecon::get_ipd_rogula(n, time, prob, cens.t)</code></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ipdrecon</span><span class="op">)</span></span>
+<span><span class="va">digitized_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">'./data/survival_lung_veteran_digitized.csv'</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">137</span></span>
+<span><span class="va">cens.t</span> <span class="op">&lt;-</span> <span class="cn">NA</span> </span>
+<span><span class="va">ipd</span> <span class="op">&lt;-</span> <span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/get_ipd_rogula.html">get_ipd_rogula</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">time</span>, <span class="va">prob</span>, <span class="va">cens.t</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="input-validation">Input Validation<a class="anchor" aria-label="anchor" href="#input-validation"></a>
 </h1>
 <p>The input parameters for the method by Guyot et al can be validated in the following way:</p>
-<p><code>{r message = FALSE, eval = FALSE} library(ipdrecon) digitized_data &lt;- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE) time &lt;- digitized_data[,1] prob &lt;- digitized_data[,2] trisk &lt;- seq(from=0, to=550, by=50) nrisk &lt;- c(137,84,55,34,25,18,13,11,6,5,4,4) tot_events &lt;- 126 lower &lt;- ipdrecon::get_lower_indices(time, trisk)  upper &lt;- ipdrecon::get_upper_indices(time, trisk)  ipdrecon::validation_input_guyot(time, prob, trisk, nrisk, lower, upper, tot_events)</code></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ipdrecon</span><span class="op">)</span></span>
+<span><span class="va">digitized_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">'./data/survival_lung_veteran_digitized.csv'</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span></span>
+<span><span class="va">trisk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from<span class="op">=</span><span class="fl">0</span>, to<span class="op">=</span><span class="fl">550</span>, by<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span>
+<span><span class="va">nrisk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">137</span>,<span class="fl">84</span>,<span class="fl">55</span>,<span class="fl">34</span>,<span class="fl">25</span>,<span class="fl">18</span>,<span class="fl">13</span>,<span class="fl">11</span>,<span class="fl">6</span>,<span class="fl">5</span>,<span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">tot_events</span> <span class="op">&lt;-</span> <span class="fl">126</span></span>
+<span><span class="va">lower</span> <span class="op">&lt;-</span> <span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/get_lower_indices.html">get_lower_indices</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">trisk</span><span class="op">)</span> </span>
+<span><span class="va">upper</span> <span class="op">&lt;-</span> <span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/get_upper_indices.html">get_upper_indices</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">trisk</span><span class="op">)</span> </span>
+<span><span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/validation_input_guyot.html">validation_input_guyot</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">prob</span>, <span class="va">trisk</span>, <span class="va">nrisk</span>, <span class="va">lower</span>, <span class="va">upper</span>, <span class="va">tot_events</span><span class="op">)</span></span></code></pre></div>
 <p>The input parameters for the method by Rogula et al can be validated in the following way:</p>
-<p><code>{r message = FALSE, eval = FALSE} library(ipdrecon) digitized_data &lt;- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE) time &lt;- digitized_data[,1] prob &lt;- digitized_data[,2] n &lt;- 137 cens.t &lt;- NA  ipdrecon::validation_input_rogula(n, time, prob, cens.t)</code></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ipdrecon</span><span class="op">)</span></span>
+<span><span class="va">digitized_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">'./data/survival_lung_veteran_digitized.csv'</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">137</span></span>
+<span><span class="va">cens.t</span> <span class="op">&lt;-</span> <span class="cn">NA</span> </span>
+<span><span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/validation_input_rogula.html">validation_input_rogula</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">time</span>, <span class="va">prob</span>, <span class="va">cens.t</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="issue-detection">Issue Detection<a class="anchor" aria-label="anchor" href="#issue-detection"></a>
@@ -131,9 +156,19 @@
 <h1 id="issue-correction">Issue Correction<a class="anchor" aria-label="anchor" href="#issue-correction"></a>
 </h1>
 <p>The function <em>fix_non_increasing_survival_times()</em> sorts first the input by survival probabilities in descending order, then fixes survival times by replacing non-increasing ones with predecessor values.</p>
-<p><code>{r message = FALSE, eval = FALSE} library(ipdrecon) digitized_data &lt;- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE) time &lt;- digitized_data[,1] prob &lt;- digitized_data[,2] ipd_fixed &lt;- ipdrecon::fix_non_increasing_survival_times(time, prob)</code></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ipdrecon</span><span class="op">)</span></span>
+<span><span class="va">digitized_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">'./data/survival_lung_veteran_digitized.csv'</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span></span>
+<span><span class="va">ipd_fixed</span> <span class="op">&lt;-</span> <span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/fix_non_increasing_survival_times.html">fix_non_increasing_survival_times</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">prob</span><span class="op">)</span></span></code></pre></div>
 <p>The function <em>fix_non_decreasing_survival_probabilities()</em> sorts first the input by survival times in ascending order, then fixes survival probabilities by replacing non-decreasing ones with predecessor values.</p>
-<p><code>{r message = FALSE, eval = FALSE} library(ipdrecon) digitized_data &lt;- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE) time &lt;- digitized_data[,1] prob &lt;- digitized_data[,2] ipd_fixed &lt;- ipdrecon::fix_non_decreasing_survival_probabilities(time, prob)</code></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ipdrecon</span><span class="op">)</span></span>
+<span><span class="va">digitized_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">'./data/survival_lung_veteran_digitized.csv'</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="va">digitized_data</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span></span>
+<span><span class="va">ipd_fixed</span> <span class="op">&lt;-</span> <span class="fu">ipdrecon</span><span class="fu">::</span><span class="fu"><a href="reference/fix_non_decreasing_survival_probabilities.html">fix_non_decreasing_survival_probabilities</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">prob</span><span class="op">)</span></span></code></pre></div>
 </div>
 
   </div>

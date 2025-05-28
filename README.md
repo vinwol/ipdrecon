@@ -27,7 +27,7 @@ Tutorial: https://automeris.io/WebPlotDigitizer/tutorial.html
 The following shows an example how to use the method by Guyot et al for reconstructing
 IPD data from digitalized survival curves.
 
-```{r message = FALSE, eval = FALSE}
+```r
 library(ipdrecon)
 digitized_data <- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE)
 time <- digitized_data[,1]
@@ -44,7 +44,7 @@ ipd <- res[[1]]
 The following shows an example how to use the method by Rogula et al for reconstructing
 IPD data from digitalized survival curves.
 
-```{r message = FALSE, eval = FALSE}
+```r
 library(ipdrecon)
 digitized_data <- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE)
 time <- digitized_data[,1]
@@ -58,7 +58,7 @@ ipd <- ipdrecon::get_ipd_rogula(n, time, prob, cens.t)
 
 The input parameters for the method by Guyot et al can be validated in the following way:
 
-```{r message = FALSE, eval = FALSE}
+```r
 library(ipdrecon)
 digitized_data <- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE)
 time <- digitized_data[,1]
@@ -73,7 +73,7 @@ ipdrecon::validation_input_guyot(time, prob, trisk, nrisk, lower, upper, tot_eve
 
 The input parameters for the method by Rogula et al can be validated in the following way:
 
-```{r message = FALSE, eval = FALSE}
+```r
 library(ipdrecon)
 digitized_data <- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE)
 time <- digitized_data[,1]
@@ -112,7 +112,7 @@ ipdrecon::find_non_increasing_survival_times(time, prob)
 The function *fix_non_increasing_survival_times()* sorts first the input by survival probabilities in descending order, 
 then fixes survival times by replacing non-increasing ones with predecessor values.
 
-```{r message = FALSE, eval = FALSE}
+```r
 library(ipdrecon)
 digitized_data <- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE)
 time <- digitized_data[,1]
@@ -123,7 +123,7 @@ ipd_fixed <- ipdrecon::fix_non_increasing_survival_times(time, prob)
 The function *fix_non_decreasing_survival_probabilities()* sorts first the input by survival times in ascending order, 
 then fixes survival probabilities by replacing non-decreasing ones with predecessor values.
 
-```{r message = FALSE, eval = FALSE}
+```r
 library(ipdrecon)
 digitized_data <- read.csv('./data/survival_lung_veteran_digitized.csv', header = FALSE)
 time <- digitized_data[,1]
