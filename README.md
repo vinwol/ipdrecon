@@ -22,17 +22,6 @@ User Manual: https://automeris.io/WebPlotDigitizer/userManual.pdf
 </br>
 Tutorial: https://automeris.io/WebPlotDigitizer/tutorial.html
 
-# Slides
-
-Extracting Data from Publications to inform Clinical Trials, Part 1: Focus on Methods, [Link](https://docs.google.com/presentation/d/1_5nhxDv0FqUyl7InHGFGGu2DDztPMiW3v06HavJVWyQ/edit#slide=id.p)
-</br>
-Extracting Data from Publications to inform Clinical Trials, Part 2: Application to GBM,
-[Link](https://docs.google.com/presentation/d/1Z6wOwvOZZYJV5vN4QrWO8IwA8Y8jLfYN2u-YCmjfa0c/edit#slide=id.p)
-
-# Python Script for Automatic Detection of Survival Curves
-
-Python script based on OpenCV for curve detection, [Link](https://github.com/vinwol/curve_detection)
-
 # Basic Usage
 
 The following shows an example how to use the method by Guyot et al for reconstructing
