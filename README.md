@@ -4,15 +4,15 @@ R package to reconstruct individual patient data from published KM survival curv
 
 # Package Installation
 
-Install this package by: remotes::install_git("https://github.roche.com/wolowskv/ipdrecon")
+Install this package by: remotes::install_git("https://github.com/vinwol/ipdrecon")
 
 # Package Website
 
-URL: https://pages.github.roche.com/wolowskv/ipdrecon/index.html
+URL: https://pages.github.com/vinwol/ipdrecon/index.html
 
 # Reference of Package Functions
 
-URL: https://pages.github.roche.com/wolowskv/ipdrecon/reference/index.html
+URL: https://pages.github.com/vinwol/ipdrecon/reference/index.html
 
 # Digitalization Tool
 
@@ -31,7 +31,7 @@ Extracting Data from Publications to inform Clinical Trials, Part 2: Application
 
 # Python Script for Automatic Detection of Survival Curves
 
-Python script based on OpenCV for curve detection, [Link](https://github.roche.com/wolowskv/curve_detection)
+Python script based on OpenCV for curve detection, [Link](https://github.com/vinwol/curve_detection)
 
 # Basic Usage
 
