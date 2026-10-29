@@ -2,20 +2,25 @@
 % Please edit documentation in R/util_ipd.R
 \name{fix_non_decreasing_survival_probabilities}
 \alias{fix_non_decreasing_survival_probabilities}
-\title{This function sorts first the input by survival times in ascending order,
-then fixes survival probabilities by replacing non-decreasing ones with predecessor values.}
+\title{This function sorts the pairs (\code{time}, \code{prob}) by survival time in ascending order,
+with ties in time ordered by survival probability in descending order, so that each time keeps its own probability.
+Then it fixes survival probabilities in one pass by replacing a probability that is larger than the preceding one with the preceding value.}
 \usage{
 fix_non_decreasing_survival_probabilities(time, prob)
 }
 \arguments{
-\item{time}{A vector of survival times.}
+\item{time}{A vector of survival times. Each time is paired with the probability at the same position in \code{prob}.
+The vector does not need to be sorted.}
 
 \item{prob}{A vector of survival probabilities.}
 }
 \value{
-A data.frame of modified survival probabilities and times.
+A data.frame with the columns \code{time} and \code{prob}, one row per input element,
+with the rows in time order (ascending, ties by probability descending).
+Each time keeps its own probability, except that a probability larger than the preceding one is replaced by the preceding value.
 }
 \description{
-This function sorts first the input by survival times in ascending order,
-then fixes survival probabilities by replacing non-decreasing ones with predecessor values.
+This function sorts the pairs (\code{time}, \code{prob}) by survival time in ascending order,
+with ties in time ordered by survival probability in descending order, so that each time keeps its own probability.
+Then it fixes survival probabilities in one pass by replacing a probability that is larger than the preceding one with the preceding value.
 }

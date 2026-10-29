@@ -9,7 +9,7 @@ which are the temporal intervals.}
 get_lower_indices(time, trisk)
 }
 \arguments{
-\item{time}{A vector of survival probabilities.}
+\item{time}{A vector of survival times. The vector does not need to be sorted.}
 
 \item{trisk}{A vector of times at which patients are at risk.}
 }
@@ -17,9 +17,15 @@ get_lower_indices(time, trisk)
 A vector that contains the lower time limits for each interval.
 It defines the starting point of each interval where calculations for survival
 estimates and events will be made.
+The values are positions in the time-ascending order of \code{time}.
 }
 \description{
 This function uses a for loop to find the minimum index of elements in the \code{time} vector,
 which are the survival times, that are greater than or equal to each element in the \code{trisk} vector,
 which are the temporal intervals.
+}
+\details{
+The returned indices are positions in the time-ascending order of \code{time},
+which is the order that \code{get_ipd_guyot()} uses.
+Pass them to \code{get_ipd_guyot()} together with the same \code{time}.
 }

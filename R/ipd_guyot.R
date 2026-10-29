@@ -10,22 +10,33 @@
 #' the estimated number of censored observations at each time point. 
 #'
 #' @param time A vector of the x coordinates of the survival times.
+#' The points (`time`, `prob`) may come in any row order.
+#' They are sorted as pairs: time ascending, ties in time by probability descending.
 #' @param prob A vector of the y coordinates corresponding to `time`, between 0 and 1. 
 #' These represent survival probabilities at the times in `time`.
+#' Each probability is paired with the time at the same position in `time`.
 #' @param trisk A vector of times at which patients are at risk.
 #' @param nrisk A vector of the number of patients at risk.
 #' @param lower A vector that contains the lower time limits for each interval. 
 #' It defines the starting point of each interval where calculations for survival 
 #' estimates and events will be made. 
+#' The values are positions in the time-ascending order of `time`.
+#' Compute them with `get_lower_indices(time, trisk)` from the same `time`.
 #' @param upper A The `upper` parameter is also a vector that contains the upper 
 #' time limits for each interval. 
 #' It defines the end point of each interval where calculations will stop. 
+#' The values are positions in the time-ascending order of `time`.
+#' Compute them with `get_upper_indices(time, trisk)` from the same `time`.
 #' @param tot_events The number total events (optional).
 #' @return A list with four data.frames, one data.frame of reconstructed IPD with two columns: 
 #' (1) time: survival time, (2) event: indicator of event, where 1=event and 0=censored, 
 #' a data.frame with estimated parameter values, a data.frame with survival times and 
 #' probabilities, potentially modified to fix non-decreasing survival probabilities,
 #' and a data.frame with details in the itme intervals.
+#' The third data.frame holds the sorted, corrected pairs: `time` ascending, ties in
+#' `time` by `prob` descending, and each probability that rises replaced by the preceding value.
+#' The function stops with an error that names both counts when the reconstructed
+#' number of patients differs from `nrisk[1]`.
 #' @export
 get_ipd_guyot <- function(time, 
                           prob, 
@@ -42,16 +53,18 @@ get_ipd_guyot <- function(time,
     prob[prob > 1] <- 1
   }
   
-  # As a default, sort survival time.
-  time <- sort(time)
-  
-  # We apply a basic fix if survival probabilities are increasing.
+  # We sort the points (time, prob) as pairs (time ascending, ties by
+  # probability descending) and apply a basic fix if survival probabilities
+  # are increasing.
   df_input <- fix_non_decreasing_survival_probabilities(time, prob)
   time <- df_input$time
   prob <- df_input$prob
   
   # Validate input.
   validation_input_guyot(time, prob, trisk, nrisk, lower, upper, tot_events)
+
+  # Number at risk at time zero, as given by the caller.
+  n_start <- nrisk[1]
   
   df_time <- prepare_time_interval_data(time, trisk, nrisk, lower, upper)
   
@@ -299,5 +312,14 @@ get_ipd_guyot <- function(time,
   IPD <- matrix(c(t_IPD,event_IPD), ncol=2, byrow=F)
   IPD <- as.data.frame(IPD)
   names(IPD) <- c('time','event')
+
+  # The IPD vectors start with nrisk[1] entries, and R extends them when events
+  # plus censoring marks exceed that. A longer result therefore means that more
+  # patients were assigned than exist at time zero. A shorter result cannot occur.
+  if (nrow(IPD) != n_start) {
+    stop(sprintf("The reconstruction contains %d patients, but nrisk[1] is %s. The reconstructed number of patients must equal the number at risk at time zero. Check nrisk, lower, upper, tot_events and the digitized points.",
+                 nrow(IPD), format(n_start, scientific = FALSE, trim = TRUE)),
+         call. = FALSE)
+  }
   return(list(IPD, km_mat, df_input, df_time))
 }

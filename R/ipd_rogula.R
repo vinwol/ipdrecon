@@ -9,15 +9,22 @@
 #' of the curve can be included in time and prob, 
 #' OR (2) the x-coordinate of the end of the curve can be included in cens_t.
 #'
-#' @param n The number of patients at risk at time zero.
+#' @param n The number of patients at risk at time zero. It must be a whole number.
 #' @param time A vector of the x coordinates of the bottoms of the drops in survival.
+#' The points (`time`, `prob`) may come in any row order.
+#' They are sorted as pairs: time ascending, ties in time by probability descending.
 #' @param prob A vector of the y coordinates corresponding to 't', between 0 and 1. 
 #' These represent survival proportions at the times in t.
+#' Each probability is paired with the time at the same position in `time`.
 #' @param cens_t A vector of times at which patients were censored (optional).
 #' @return A list with two data.frames, one with the reconstructed IPD with two columns: 
 #' (1) time: survival time, (2) event: indicator of event, where 1=event and 0=censored.
 #' The other one contains survival times and probabilities, potentially modified to
 #' fix non-decreasing survival probabilities.
+#' The second data.frame holds the sorted pairs. A probability that rises is replaced by
+#' the preceding value (carry-forward).
+#' The function stops with an error that names both counts when the reconstructed
+#' number of patients differs from `n`.
 #' @export
 get_ipd_rogula <- function(n, 
                            time, 
@@ -35,12 +42,12 @@ get_ipd_rogula <- function(n,
   # Correct negative times.
   time[time < 0] <- 0
   
-  # Sort provided data.
-  time <- sort(time) # survival time.
-  prob <- sort(prob, decreasing=T) # survival probability.
-  cens_t <- sort(cens_t) # censoring time.
+  # Sort the censoring times.
+  cens_t <- sort(cens_t)
   
-  # We apply a basic fix if survival probabilities are increasing.
+  # We sort the points (time, prob) as pairs (time ascending, ties by
+  # probability descending) and apply a basic fix if survival probabilities
+  # are increasing: a rising probability is replaced by the preceding value.
   df_input <- fix_non_decreasing_survival_probabilities(time, prob)
   time <- df_input$time
   prob <- df_input$prob
@@ -110,6 +117,15 @@ get_ipd_rogula <- function(n,
       IPD$time[(p+1):(p+n_cens)] <- cens_t[cens_t >= max(time)][1:n_cens]
       IPD$event[(p+1):(p+n_cens)] = 0
     }
+  }
+
+  # The shell table has n rows and every write index is capped at n, so the
+  # result has n rows for any whole n. A non-whole n is truncated by rep()
+  # when the shell table is created, which this check catches.
+  if (nrow(IPD) != n) {
+    stop(sprintf("The reconstruction contains %d patients, but n is %s. The reconstructed number of patients must equal n, the number at risk at time zero. Check n and the digitized points.",
+                 nrow(IPD), format(n, scientific = FALSE, trim = TRUE)),
+         call. = FALSE)
   }
   return(list(IPD, df_input))
 }

@@ -16,10 +16,13 @@ the estimated number of censored observations at each time point.}
 get_ipd_guyot(time, prob, trisk, nrisk, lower, upper, tot_events = NA)
 }
 \arguments{
-\item{time}{A vector of the x coordinates of the survival times.}
+\item{time}{A vector of the x coordinates of the survival times.
+The points (\code{time}, \code{prob}) may come in any row order.
+They are sorted as pairs: time ascending, ties in time by probability descending.}
 
 \item{prob}{A vector of the y coordinates corresponding to \code{time}, between 0 and 1.
-These represent survival probabilities at the times in \code{time}.}
+These represent survival probabilities at the times in \code{time}.
+Each probability is paired with the time at the same position in \code{time}.}
 
 \item{trisk}{A vector of times at which patients are at risk.}
 
@@ -27,11 +30,15 @@ These represent survival probabilities at the times in \code{time}.}
 
 \item{lower}{A vector that contains the lower time limits for each interval.
 It defines the starting point of each interval where calculations for survival
-estimates and events will be made.}
+estimates and events will be made.
+The values are positions in the time-ascending order of \code{time}.
+Compute them with \code{get_lower_indices(time, trisk)} from the same \code{time}.}
 
 \item{upper}{A The \code{upper} parameter is also a vector that contains the upper
 time limits for each interval.
-It defines the end point of each interval where calculations will stop.}
+It defines the end point of each interval where calculations will stop.
+The values are positions in the time-ascending order of \code{time}.
+Compute them with \code{get_upper_indices(time, trisk)} from the same \code{time}.}
 
 \item{tot_events}{The number total events (optional).}
 }
@@ -41,6 +48,10 @@ A list with four data.frames, one data.frame of reconstructed IPD with two colum
 a data.frame with estimated parameter values, a data.frame with survival times and
 probabilities, potentially modified to fix non-decreasing survival probabilities,
 and a data.frame with details in the itme intervals.
+The third data.frame holds the sorted, corrected pairs: \code{time} ascending, ties in
+\code{time} by \code{prob} descending, and each probability that rises replaced by the preceding value.
+The function stops with an error that names both counts when the reconstructed
+number of patients differs from \code{nrisk[1]}.
 }
 \description{
 Function to reconstruct individual patient data (IPD) from Kaplan-Meier (KM)

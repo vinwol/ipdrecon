@@ -16,12 +16,15 @@ OR (2) the x-coordinate of the end of the curve can be included in cens_t.}
 get_ipd_rogula(n, time, prob, cens_t = NA)
 }
 \arguments{
-\item{n}{The number of patients at risk at time zero.}
+\item{n}{The number of patients at risk at time zero. It must be a whole number.}
 
-\item{time}{A vector of the x coordinates of the bottoms of the drops in survival.}
+\item{time}{A vector of the x coordinates of the bottoms of the drops in survival.
+The points (\code{time}, \code{prob}) may come in any row order.
+They are sorted as pairs: time ascending, ties in time by probability descending.}
 
 \item{prob}{A vector of the y coordinates corresponding to 't', between 0 and 1.
-These represent survival proportions at the times in t.}
+These represent survival proportions at the times in t.
+Each probability is paired with the time at the same position in \code{time}.}
 
 \item{cens_t}{A vector of times at which patients were censored (optional).}
 }
@@ -30,6 +33,10 @@ A list with two data.frames, one with the reconstructed IPD with two columns:
 (1) time: survival time, (2) event: indicator of event, where 1=event and 0=censored.
 The other one contains survival times and probabilities, potentially modified to
 fix non-decreasing survival probabilities.
+The second data.frame holds the sorted pairs. A probability that rises is replaced by
+the preceding value (carry-forward).
+The function stops with an error that names both counts when the reconstructed
+number of patients differs from \code{n}.
 }
 \description{
 Function to reconstruct individual patient data (IPD) from Kaplan-Meier (KM) survival curves

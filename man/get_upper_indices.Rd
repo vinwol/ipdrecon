@@ -9,16 +9,22 @@ which are the temporal intervals.}
 get_upper_indices(time, trisk)
 }
 \arguments{
-\item{time}{A vector of survival probabilities.}
+\item{time}{A vector of survival times. The vector does not need to be sorted.}
 
 \item{trisk}{A vector of times at which patients are at risk.}
 }
 \value{
 A vector that contains the upper time limits for each interval.
 It defines the end point of each interval where calculations will stop.
+The values are positions in the time-ascending order of \code{time}.
 }
 \description{
 This function uses a for loop to find the maximum index of elements in the \code{time} vector,
 which are the survival times, that are less than or equal to each element in the \code{trisk} vector,
 which are the temporal intervals.
+}
+\details{
+The returned indices are positions in the time-ascending order of \code{time},
+which is the order that \code{get_ipd_guyot()} uses.
+Pass them to \code{get_ipd_guyot()} together with the same \code{time}.
 }

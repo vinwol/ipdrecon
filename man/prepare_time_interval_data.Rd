@@ -7,7 +7,8 @@
 prepare_time_interval_data(time, trisk, nrisk, lower, upper)
 }
 \arguments{
-\item{time}{A vector of survival probabilities.}
+\item{time}{A vector of survival times. The vector does not need to be sorted.
+The values in \code{lower} and \code{upper} are positions in the time-ascending order of \code{time}.}
 
 \item{trisk}{A vector of times at which patients are at risk.}
 
