@@ -7,10 +7,10 @@ testthat::test_that("Valid input test", {
   n <- 137
   cens.t <- NA
   ipd <- get_ipd_rogula(n, time, prob, cens.t)
-  testthat::expect_equal(round(as.numeric(ipd[1,]),4), round(c(0.5300353,1),4))
+  testthat::expect_equal(round(as.numeric(ipd[[1]][1,]),4), round(c(0.5300353,1),4))
   cens.t <- c(54.1, 125.7, 555.3) 
   ipd <- get_ipd_rogula(n, time, prob, cens.t)
-  testthat::expect_equal(round(as.numeric(ipd[1,]),4), round(c(0.5300353,1),4))
+  testthat::expect_equal(round(as.numeric(ipd[[1]][1,]),4), round(c(0.5300353,1),4))
 })
 
 
