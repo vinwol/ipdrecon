@@ -206,3 +206,12 @@ testthat::test_that("fix_non_increasing_survival_times checks lengths and accept
   testthat::expect_equal(nrow(empty), 0)
   testthat::expect_equal(names(empty), c("time", "prob"))
 })
+
+testthat::test_that("The package namespace imports the pipe operator itself", {
+  # Look only in the imports environment of the package namespace. Searching the
+  # search path would find the pipe that testthat re-exports, and the missing
+  # import would stay hidden. Without the import, a fresh R session that only
+  # attaches ipdrecon fails with 'could not find function "%>%"'.
+  namespace_imports <- parent.env(asNamespace("ipdrecon"))
+  testthat::expect_true(exists("%>%", envir = namespace_imports, inherits = FALSE))
+})
